@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Terre — Astronomie de Position</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@400;500;600;700&amp;family=EB+Garamond:ital,wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #f8f0d8;
+    --parchment-dark: #e8d9b8;
+    --ink: #2c1e12;
+    --gold: #c9a227;
+    --gold-dark: #a17d1e;
+    --accent: #8b5a2b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #2c1e12;
+    color: var(--ink);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 19px;
+    line-height: 1.75;
+    background-image: 
+      radial-gradient(circle at 25% 30%, rgba(200,180,120,0.08) 0%, transparent 50%),
+      radial-gradient(circle at 75% 70%, rgba(200,180,120,0.06) 0%, transparent 50%);
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+
+  .book-container {
+    max-width: 820px;
+    margin: 0 auto;
+    background: var(--parchment);
+    border: 18px solid #3c2a1f;
+    border-image: linear-gradient(#c9a227, #8b5a2b) 1;
+    box-shadow: 
+      0 0 80px rgba(0,0,0,0.8),
+      inset 0 0 120px rgba(139,90,43,0.15),
+      0 30px 60px rgba(0,0,0,0.6);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .book-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      linear-gradient(rgba(200,170,100,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,170,100,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.6;
+  }
+
+  .header-ornament {
+    height: 6px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 30px 0 15px;
+  }
+
+  .title-page {
+    padding: 80px 60px 60px;
+    text-align: center;
+    border-bottom: 2px solid var(--gold);
+    position: relative;
+  }
+
+  .title-page h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.8rem;
+    font-weight: 400;
+    color: var(--gold-dark);
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .title-page .subtitle {
+    font-size: 1.35rem;
+    color: #5c3f1f;
+    font-style: italic;
+    margin-bottom: 40px;
+  }
+
+  .chapter {
+    padding: 60px 70px;
+    position: relative;
+  }
+
+  .chapter::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 50px;
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .chapter-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .chapter h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.1rem;
+    color: #3c2a1f;
+    margin-bottom: 25px;
+    line-height: 1.2;
+  }
+
+  p {
+    margin-bottom: 1.4em;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .ornate-dropcap {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4.2rem;
+    float: left;
+    line-height: 0.8;
+    margin: 0.1em 0.15em 0 0;
+    color: var(--gold-dark);
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.15);
+  }
+
+  .math-block {
+    background: #f0e4c8;
+    border: 2px solid var(--gold);
+    padding: 28px 32px;
+    margin: 2.2rem 0;
+    font-family: 'EB Garamond', serif;
+    font-size: 17px;
+    line-height: 1.9;
+    position: relative;
+  }
+
+  .math-block::before {
+    content: "✧";
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--parchment);
+    padding: 0 12px;
+    color: var(--gold);
+    font-size: 22px;
+  }
+
+  .def-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 22px;
+    margin: 2.5rem 0;
+  }
+
+  .def-card {
+    background: #f0e4c8;
+    border: 1px solid #c9a227;
+    padding: 22px;
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .def-card h4 {
+    color: var(--accent);
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 8px;
+  }
+
+  .diagram-wrap {
+    margin: 3rem 0;
+    padding: 25px;
+    background: #e8d9b8;
+    border: 3px double var(--gold);
+    text-align: center;
+  }
+
+  .diagram-caption {
+    font-size: 0.95rem;
+    color: #5c3f1f;
+    margin-top: 12px;
+    font-style: italic;
+  }
+
+  footer {
+    text-align: center;
+    padding: 50px 40px 40px;
+    color: #5c3f1f;
+    font-size: 0.95rem;
+    border-top: 2px solid var(--gold);
+  }
+
+  .gold-rule {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 35px 0;
+  }
+</style>
+</head>
+<body>
+<div class="book-container">
+
+  <!-- Page de titre -->
+  <div class="title-page">
+    <div style="font-size: 1rem; letter-spacing: 6px; color: #8b5a2b; margin-bottom: 20px;">CHAPITRE IV</div>
+    <h1>LA TERRE</h1>
+    <p class="subtitle">Représentation astronomique et mathématique de notre planète</p>
+    <p style="font-size: 1.1rem; max-width: 420px; margin: 0 auto; color: #5c3f1f;">
+      Astronomie de position — Navigation céleste
+    </p>
+    <div class="header-ornament"></div>
+  </div>
+
+  <!-- 4.1 -->
+  <div class="chapter" id="s41">
+    <div class="chapter-number">Section 4.1</div>
+    <h2>Représentation astronomique de la Terre</h2>
+    <div class="gold-rule"></div>
+    
+    <p><span class="ornate-dropcap">E</span>n astronomie de position, la Terre est modélisée comme un sphéroïde de révolution légèrement aplati aux pôles. Pour la plupart des calculs de navigation céleste, l’approximation sphérique suffit largement. On imagine alors une sphère céleste de rayon infiniment grand, centrée sur le centre de la Terre — ou sur l’observateur —, sur laquelle viennent se projeter tous les astres.</p>
+
+    <div class="def-grid">
+      <div class="def-card">
+        <h4>Sphère terrestre</h4>
+        <p>Rayon moyen <strong>R = 6 371 km</strong>. Aplatissement f = 1/298,257. L’ellipsoïde WGS-84 sert de référence géodésique mondiale.</p>
+      </div>
+      <div class="def-card">
+        <h4>Axe de rotation</h4>
+        <p>Incliné de <strong>ε ≈ 23°26′</strong> par rapport à l’axe de l’écliptique. Cette obliquité est la cause des saisons.</p>
+      </div>
+      <div class="def-card">
+        <h4>Sphère céleste</h4>
+        <p>Le plan équatorial étendu à l’infini donne l’équateur céleste ; l’axe de rotation étendu, les pôles célestes.</p>
+      </div>
+      <div class="def-card">
+        <h4>Écliptique</h4>
+        <p>Plan de l’orbite terrestre autour du Soleil. Le point vernal ♈ (γ), intersection de l’écliptique et de l’équateur, sert d’origine des longitudes célestes.</p>
+      </div>
+    </div>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 700 320" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="350" cy="180" rx="280" ry="70" fill="none" stroke="#c9a227" stroke-width="2" stroke-dasharray="6,4"/>
+        <ellipse cx="350" cy="200" rx="200" ry="50" fill="none" stroke="#2c1e12" stroke-width="2"/>
+        <circle cx="350" cy="195" r="40" fill="#8b5a2b" stroke="#2c1e12" stroke-width="2"/>
+        <line x1="340" y1="80" x2="360" y2="320" stroke="#c9a227" stroke-width="2"/>
+        <text x="335" y="72" font-family="serif" font-size="13" fill="#c9a227">Pôle N céleste</text>
+        <text x="600" y="155" font-family="serif" font-size="12" fill="#8b5a2b">Écliptique</text>
+        <text x="555" y="208" font-family="serif" font-size="12" fill="#2c1e12">Équateur céleste</text>
+      </svg>
+      <div class="diagram-caption">Fig. 4.1 — Relation entre équateur céleste, écliptique et obliquité ε</div>
+    </div>
+
+    <div class="math-block">
+      <strong>Paramètres fondamentaux :</strong><br><br>
+      Rayon équatorial a = 6 378,137 km<br>
+      Rayon polaire b = 6 356,752 km<br>
+      Obliquité ε₀ = 23° 26′ 21,406″ (J2000)<br>
+      Période de rotation sidérale = 86 164,091 s
+    </div>
+  </div>
+
+  <!-- 4.2 -->
+  <div class="chapter" id="s42">
+    <div class="chapter-number">Section 4.2</div>
+    <h2>Coordonnées astronomiques d’un lieu</h2>
+    <div class="gold-rule"></div>
+    
+    <p>La position d’un observateur à la surface de la Terre se définit par deux angles : la <strong>latitude géographique φ</strong> et la <strong>longitude géographique λ</strong>.</p>
+
+    <div class="def-grid">
+      <div class="def-card">
+        <h4>Latitude φ</h4>
+        <p>Angle entre le plan équatorial et la verticale du lieu. Elle vaut +90° au pôle Nord, 0° à l’équateur, −90° au pôle Sud.</p>
+      </div>
+      <div class="def-card">
+        <h4>Longitude λ</h4>
+        <p>Angle dièdre entre le méridien de Greenwich et le méridien du lieu. Positive vers l’Est.</p>
+      </div>
+    </div>
+
+    <div class="math-block">
+      <strong>Propriété fondamentale :</strong><br>
+      La hauteur du pôle Nord céleste au-dessus de l’horizon est toujours égale à la latitude φ du lieu. C’est pourquoi l’observation de Polaris donne directement une mesure approximative de la latitude.
+    </div>
+  </div>
+
+  <!-- 4.3 -->
+  <div class="chapter" id="s43">
+    <div class="chapter-number">Section 4.3</div>
+    <h2>Longitude et temps sidéral local</h2>
+    <div class="gold-rule"></div>
+    
+    <p>Le temps sidéral mesure la rotation de la Terre par rapport aux étoiles fixes. Il constitue le lien essentiel entre la longitude et l’heure.</p>
+    
+    <div class="math-block">
+      TSL = TSIG + λ (λ en degrés, est positif)<br><br>
+      H (angle horaire) = TSL − α (α = ascension droite de l’astre)
+    </div>
+  </div>
+
+  <!-- 4.4 & 4.5 -->
+  <div class="chapter" id="s45">
+    <div class="chapter-number">Section 4.5</div>
+    <h2>Le point en mer : les droites de hauteur</h2>
+    <div class="gold-rule"></div>
+    
+    <p>La méthode des droites de hauteur, ou méthode de l’intercept (Marcq Saint-Hilaire), reste la technique classique de la navigation astronomique. Chaque observation d’un astre avec un sextant définit un cercle de hauteur égale sur la surface terrestre. L’intersection de plusieurs cercles donne la position.</p>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 680 380" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="220" cy="200" r="160" fill="none" stroke="#8b5a2b" stroke-width="3" stroke-dasharray="4,6"/>
+        <circle cx="460" cy="140" r="190" fill="none" stroke="#c9a227" stroke-width="3" stroke-dasharray="4,6"/>
+        <line x1="290" y1="130" x2="185" y2="310" stroke="#2c1e12" stroke-width="4"/>
+        <line x1="390" y1="95" x2="530" y2="270" stroke="#8b5a2b" stroke-width="4"/>
+        <circle cx="410" cy="230" r="8" fill="#c9a227"/>
+        <text x="420" y="245" font-family="serif" font-size="14" fill="#2c1e12">Position observée</text>
+      </svg>
+      <div class="diagram-caption">Fig. 4.5 — Intersection de deux droites de hauteur</div>
+    </div>
+  </div>
+
+  <!-- 4.6 -->
+  <div class="chapter" id="s46">
+    <div class="chapter-number">Section 4.6</div>
+    <h2>Une illustration littéraire</h2>
+    <div class="gold-rule"></div>
+    
+    <p>Les mathématiques de la navigation céleste ont toujours fasciné les esprits. Antoine de Saint-Exupéry, lui-même aviateur et navigateur, l’exprimait magnifiquement :</p>
+    
+    <div style="background:#f0e4c8; padding:30px; border-left:6px solid var(--gold); margin:2rem 0; font-style:italic;">
+      « Si tu me dis : j’ai vu une belle maison en briques roses avec des géraniums aux fenêtres… je ne pourrai pas la trouver. Mais si tu me dis : 48° de latitude Nord et 2° de longitude Est… alors je sais exactement où elle est. »
+    </div>
+
+    <p>De Jules Verne à Dava Sobel dans <em>Longitude</em>, l’histoire de la conquête des mers est aussi celle d’une lutte épique entre l’homme et les astres.</p>
+  </div>
+
+  <footer>
+    <p>Extrait d’un traité d’Astronomie de Position — Fin du Chapitre IV</p>
+    <p style="margin-top:20px; font-size:0.9rem;">« Les étoiles ne mentent jamais à qui sait les interroger. »</p>
+  </footer>
+
+</div>
+</body>
+</html>
